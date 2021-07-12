@@ -6,33 +6,24 @@
 {% assign featured_media = current_variant.featured_media | default: product.featured_media %}
 <div class="collection-template" data-section-id="{{ section.id }}" data-section-type="collection-template">
   {% assign t = template | split: '.' | first  %}
-    <div class="page-width">
-  <nav class="breadcrumbs" aria-label="breadcrumbs">
-    <ol>
-      <div>
-        <a href="/" title="Home">Home</a> 
-      </div>
-      <div>/</div>
-      <div>
-        <a href="/collections" title="Shop">SHOP</a> 
-      </div>
-      <div>/</div>
-    {% case t %}
-    {% when 'page' %}
+  <div class="page-width">
+    <nav class="breadcrumbs" aria-label="breadcrumbs">
+      <ol>
+        <div>
+          <a href="/" title="Home">Home</a> 
+        </div>
+        <div>/</div>
+        <div>
+          <a href="/collections" title="Shop">SHOP</a> 
+        </div>
+        <div>/</div>
 
-      {% comment %} breadcrumb link output {% endcomment %}
-
-    {% else %}
-<!--         <a href="{{ request.path }}" aria-current="page">{{ page_title }}</a> -->
-
-      <div>
-        <span class="currentBreadcrumps">{{page_title }}</span>
-      </div>
-
-    {% endcase %}
-
-    </ol>
-  </nav>
+        <div>
+          <span class="currentBreadcrumps">{{page_title }}</span>
+        </div>
+      </ol>
+    </nav>
+  </div>
 </div>
 <div class="product-template" data-section-id="{{ section.id }}" data-section-type="product-template" data-variant-id="{{ current_variant.id }}" itemscope itemtype="http://schema.org/Product">
   <meta itemprop="name" content="{{ product.title }}">
@@ -142,7 +133,7 @@
                 <span class="product__vendor text-small text-left" itemprop="brand">{{ product.vendor }}</span>
               {% endif %}
     
-              <h1 class="product__title h2 text-left" itemprop="name">{{ product.title }}</h1>
+              <h1 class="product__title h1 text-left" itemprop="name">{{ product.title }}</h1>
               <p class="product__price text-left{% if current_variant_sale %} product__price--sale{% endif %}" data-product-price aria-live="polite">
     
                 <span class="product__sale-price-label visually-hidden">{{ 'products.product.sale_price' | t }}</span>
@@ -191,9 +182,36 @@
               </div>
     
             </div>
-            
+
+            {%- if product.metafields.instructions != blank -%}
+              <ul>
+                {%- for field in product.metafields.instructions -%}
+                  <li>{{ field | first }}: {{ field | last }}</li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+
             <div class="product__description rte" itemprop="description" class="rte">
-              {{ product.description }}
+              <div class="product__description--tabs_container">
+                <h6 class="tabs__title">Description</h6>
+              </div>
+              {%- assign product_description_content = product.description -%}
+
+              {%-if section.settings.enable_description_tabs -%}
+                {%- assign product_description_content = product_description_content | split: '<h6>' | first -%}
+              {%- endif -%}
+
+              {% if product_description_content != '' %}
+                <div id="product-description">
+                  {{ product.description }}
+                </div>
+              {% endif %}
+
+              {%-if section.settings.enable_description_tabs and product_description_content == '' -%}
+                <div id="product-description">
+                  {% include 'product-tabs' %}
+                </div>
+              {% endif  %}
             </div>
 
           </div>
@@ -327,7 +345,14 @@
     "zh-CN": "产品页面",
     "zh-TW": "產品頁面"
   },
-  "settings": [
+  "settings": [    
+    {
+      "type": "checkbox", 
+      "id": "enable_description_tabs", 
+      "label": "Enable Description Tabs", 
+      "default": true, 
+      "info": "Heading 6 titles will be converted to tab headings, tab content will be everything between the Heading 6 titles." 
+    },
     {
       "type": "checkbox",
       "id": "show_quantity_selector",
