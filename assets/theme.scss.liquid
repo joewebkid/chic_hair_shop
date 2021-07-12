@@ -701,6 +701,13 @@ textarea {
   -moz-appearance: none;
 }
 
+/*============================================================================
+  PRODUCT CONTAINER
+==============================================================================*/
+.product__container {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+}
 
 /*============================================================================
   Fast Tap
@@ -5405,7 +5412,6 @@ $image-bar-placeholder-border-color: rgba($color-body-text, 0.25);
 
 .product__content-header {
   padding: 48px 0;
-
   @include media-query($medium-up) {
     padding: 90px 0;
   }
@@ -5501,26 +5507,26 @@ $image-bar-placeholder-border-color: rgba($color-body-text, 0.25);
 .product__description {
   @include flex-order(2);
 
-  @include media-query($medium-up) {
+  {% comment %} @include media-query($medium-up) {
     width: calc(50% - #{$gutter * 3 / 2});
   }
 
   @include media-query($small) {
     width: 100%;
     margin-top: $gutter * 4;
-  }
+  } {% endcomment %}
 }
 
 .product__form-container {
   @include flex-order(1);
 
-  @include media-query($medium-up) {
+  {% comment %} @include media-query($medium-up) {
     width: calc(50% - #{$gutter * 3 / 2});
   }
 
   @include media-query($small) {
     width: 100%;
-  }
+  } {% endcomment %}
 }
 
 .product__form-wrapper--fixed {

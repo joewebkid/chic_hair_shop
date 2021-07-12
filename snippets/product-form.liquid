@@ -4,6 +4,60 @@
   {% assign button_text = 'products.product.add_to_cart' | t %}
 {% endunless %}
 
+
+<p class="line-item-property__field">
+  <label class="attr__title">Color</label>
+  <div class="attributes__checkbox">
+	  <div><input type="checkbox" id="1.0" hidden-data="Color" onchange="fillHidden('Color')" value="1.0"><label for="1.0"><span>1.0</span></label></div>
+	  <div><input type="checkbox" id="1.2" hidden-data="Color" onchange="fillHidden('Color')" value="1.2"><label for="1.2"><span>1.2</span></label></div>
+	  <div><input type="checkbox" id="2.0" hidden-data="Color" onchange="fillHidden('Color')" value="2.0"><label for="2.0"><span>2.0</span></label></div>
+	  <div><input type="checkbox" id="3.0" hidden-data="Color" onchange="fillHidden('Color')" value="3.0"><label for="3.0"><span>3.0</span></label></div>
+	  <div><input type="checkbox" id="4.0" hidden-data="Color" onchange="fillHidden('Color')" value="4.0"><label for="4.0"><span>4.0</span></label></div>
+	  <div><input type="checkbox" id="5.0" hidden-data="Color" onchange="fillHidden('Color')" value="5.0"><label for="5.0"><span>5.0</span></label></div>
+	  <div><input type="checkbox" id="6.0" hidden-data="Color" onchange="fillHidden('Color')" value="6.0"><label for="6.0"><span>6.0</span></label></div>
+	  <div><input type="checkbox" id="6.1" hidden-data="Color" onchange="fillHidden('Color')" value="6.1"><label for="6.1"><span>6.1</span></label></div>
+	  <div><input type="checkbox" id="6.2" hidden-data="Color" onchange="fillHidden('Color')" value="6.2"><label for="6.2"><span>6.2</span></label></div>
+	  <div><input type="checkbox" id="6.3" hidden-data="Color" onchange="fillHidden('Color')" value="6.3"><label for="6.3"><span>6.3</span></label></div>
+	  <div><input type="checkbox" id="7.0" hidden-data="Color" onchange="fillHidden('Color')" value="7.0"><label for="7.0"><span>7.0</span></label></div>
+	  <div><input type="checkbox" id="7.03" hidden-data="Color" onchange="fillHidden('Color')" value="7.03"><label for="7.03"><span>7.03</span></label></div>
+	  <div><input type="checkbox" id="7.1" hidden-data="Color" onchange="fillHidden('Color')" value="7.1"><label for="7.1"><span>7.1</span></label></div>
+	  <div><input type="checkbox" id="7.43" hidden-data="Color" onchange="fillHidden('Color')" value="7.43"><label for="7.43"><span>7.43</span></label></div>
+	  <div><input type="checkbox" id="7.7" hidden-data="Color" onchange="fillHidden('Color')" value="7.7"><label for="7.7"><span>7.7</span></label></div>
+	  <div><input type="checkbox" id="8.0" hidden-data="Color" onchange="fillHidden('Color')" value="8.0"><label for="8.0"><span>8.0</span></label></div>
+	  <div><input type="checkbox" id="8.1" hidden-data="Color" onchange="fillHidden('Color')" value="8.1"><label for="8.1"><span>8.1</span></label></div>
+	  <div><input type="checkbox" id="8.3" hidden-data="Color" onchange="fillHidden('Color')" value="8.3"><label for="8.3"><span>8.3</span></label></div>
+	  <div><input type="checkbox" id="834" hidden-data="Color" onchange="fillHidden('Color')" value="834"><label for="834"><span>834</span></label></div>
+	  <div><input type="checkbox" id="9.0" hidden-data="Color" onchange="fillHidden('Color')" value="9.0"><label for="9.0"><span>9.0</span></label></div>
+	  <div><input type="checkbox" id="9.03" hidden-data="Color" onchange="fillHidden('Color')" value="9.03"><label for="9.03"><span>9.03</span></label></div>
+	  <div><input type="checkbox" id="9.13" hidden-data="Color" onchange="fillHidden('Color')" value="9.13"><label for="9.13"><span>9.13</span></label></div>
+	  <div><input type="checkbox" id="10.0" hidden-data="Color" onchange="fillHidden('Color')" value="10.0"><label for="10.0"><span>10.0</span></label></div>
+	  <div><input type="checkbox" id="10.1" hidden-data="Color" onchange="fillHidden('Color')" value="10.1"><label for="10.1"><span>10.1</span></label></div>
+	  <div><input type="checkbox" id="10.3" hidden-data="Color" onchange="fillHidden('Color')" value="10.3"><label for="10.3"><span>10.3</span></label></div>
+	  <div><input type="checkbox" id="12.0" hidden-data="Color" onchange="fillHidden('Color')" value="12.0"><label for="12.0"><span>12.0</span></label></div>
+	  <div><input type="checkbox" id="Omre" hidden-data="Color" onchange="fillHidden('Color')" value="Omre"><label for="Omre"><span>Omre</span></label></div>
+  	<input type="hidden" id="Color" name="properties[Color]">
+  </div>
+  <script>
+    function fillHidden(hiddenname) {
+    var checkboxes = document.querySelectorAll('[hidden-data="'+hiddenname+'"]');
+    var hiddenfield = document.getElementById(hiddenname);
+    hiddenfield.value = ""
+    var i;
+    for (i = 0; i < checkboxes.length; i++) {
+      var x = checkboxes[i];
+      if(x.checked){
+        if(hiddenfield.value==""){
+          hiddenfield.value = x.value;
+          }else{
+          hiddenfield.value = hiddenfield.value + ", " + x.value; 
+          } 
+        }
+      }
+    }
+  </script>
+</p>
+
+
 {% form 'product', product, class:'product-form' %}
   {% unless product.has_only_default_variant %}
     {% for option in product.options_with_values %}

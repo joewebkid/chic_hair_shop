@@ -4,7 +4,36 @@
   {%- assign current_variant_sale = true -%}
 {% endif %}
 {% assign featured_media = current_variant.featured_media | default: product.featured_media %}
+<div class="collection-template" data-section-id="{{ section.id }}" data-section-type="collection-template">
+  {% assign t = template | split: '.' | first  %}
+    <div class="page-width">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ol>
+      <div>
+        <a href="/" title="Home">Home</a> 
+      </div>
+      <div>/</div>
+      <div>
+        <a href="/collections" title="Shop">SHOP</a> 
+      </div>
+      <div>/</div>
+    {% case t %}
+    {% when 'page' %}
 
+      {% comment %} breadcrumb link output {% endcomment %}
+
+    {% else %}
+<!--         <a href="{{ request.path }}" aria-current="page">{{ page_title }}</a> -->
+
+      <div>
+        <span class="currentBreadcrumps">{{page_title }}</span>
+      </div>
+
+    {% endcase %}
+
+    </ol>
+  </nav>
+</div>
 <div class="product-template" data-section-id="{{ section.id }}" data-section-type="product-template" data-variant-id="{{ current_variant.id }}" itemscope itemtype="http://schema.org/Product">
   <meta itemprop="name" content="{{ product.title }}">
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
@@ -16,8 +45,8 @@
   ------------------------------------------------------------------------------
   {% endcomment %}
   
-  <div class="grid">
-    <div class="grid__item medium-up--push-one-twelfth medium-up--ten-twelfths">
+  <div class="product__container page-width">
+    <div class="">
       <div class="product-template__media page-width page-width--no-gutter">
         {% assign variant_media_ids = '' %}
 
@@ -103,8 +132,73 @@
         
       </div>
     </div>
-    <div class="grid__item medium-up--push-one-twelfth medium-up--ten-twelfths">
-      
+    <div class="">
+      <div class="product__content page-width">
+        <div class="grid">
+          <div class="grid__item medium-up--push-one-twelfth medium-up--ten-twelfths">
+            <div class="product__content-header">
+    
+              {% if section.settings.show_vendor %}
+                <span class="product__vendor text-small text-left" itemprop="brand">{{ product.vendor }}</span>
+              {% endif %}
+    
+              <h1 class="product__title h2 text-left" itemprop="name">{{ product.title }}</h1>
+              <p class="product__price text-left{% if current_variant_sale %} product__price--sale{% endif %}" data-product-price aria-live="polite">
+    
+                <span class="product__sale-price-label visually-hidden">{{ 'products.product.sale_price' | t }}</span>
+                <span class="product__regular-price-label visually-hidden">{{ 'products.product.price' | t }}</span>
+                <span class="product__current-price" data-regular-price>{{ current_variant.price | money }}</span>
+    
+                <span class="product__compare-price-label visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+                <s class="product__compare-price" data-compare-price>{{ current_variant.compare_at_price | money }}</s>
+    
+                {% include 'product-unit-price', variant: current_variant %}
+              </p>
+    
+              {%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
+                <div class="product__policies rte text-left">
+                  {%- if cart.taxes_included -%}
+                    {{ 'products.product.include_taxes' | t }}
+                  {%- endif -%}
+                  {%- if shop.shipping_policy.body != blank -%}
+                    {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+    
+            </div>
+    
+            <div class="product__content-main">
+    
+              <div class="product__form-container" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                <div class="product__form-wrapper">
+                  <meta itemprop="price" content="{{ current_variant.price | divided_by: 100.00 }}">
+                  <meta itemprop="priceCurrency" content="{{ cart.currency.iso_code }}">
+                  <link itemprop="availability" href="http://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}">
+    
+                  {% include 'product-form' %}
+    
+                  {% if section.settings.show_share_buttons %}
+                    {% if settings.share_facebook or settings.share_twitter or settings.share_pinterest %}
+                      <div class="product__share-wrapper small--hide">
+                        <div class="product__share">
+                            {% include 'social-sharing', type: "product", links: 'bottom' share_title: product.title, share_permalink: product.url, share_image: featured_media %}
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              </div>
+    
+            </div>
+            
+            <div class="product__description rte" itemprop="description" class="rte">
+              {{ product.description }}
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -113,70 +207,7 @@
   Product Form & Description
   ------------------------------------------------------------------------------
   {% endcomment %}
-  <div class="product__content page-width">
-    <div class="grid">
-      <div class="grid__item medium-up--push-one-twelfth medium-up--ten-twelfths">
-        <div class="product__content-header">
-
-          {% if section.settings.show_vendor %}
-            <span class="product__vendor text-small text-center" itemprop="brand">{{ product.vendor }}</span>
-          {% endif %}
-
-          <h1 class="product__title h2 text-center" itemprop="name">{{ product.title }}</h1>
-          <p class="product__price text-center{% if current_variant_sale %} product__price--sale{% endif %}" data-product-price aria-live="polite">
-
-            <span class="product__sale-price-label visually-hidden">{{ 'products.product.sale_price' | t }}</span>
-            <span class="product__regular-price-label visually-hidden">{{ 'products.product.price' | t }}</span>
-            <span class="product__current-price" data-regular-price>{{ current_variant.price | money }}</span>
-
-            <span class="product__compare-price-label visually-hidden">{{ 'products.product.regular_price' | t }}</span>
-            <s class="product__compare-price" data-compare-price>{{ current_variant.compare_at_price | money }}</s>
-
-            {% include 'product-unit-price', variant: current_variant %}
-          </p>
-
-          {%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
-            <div class="product__policies rte">
-              {%- if cart.taxes_included -%}
-                {{ 'products.product.include_taxes' | t }}
-              {%- endif -%}
-              {%- if shop.shipping_policy.body != blank -%}
-                {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-
-        </div>
-
-        <div class="product__content-main">
-          <div class="product__description rte" itemprop="description" class="rte">
-            {{ product.description }}
-          </div>
-
-          <div class="product__form-container" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-            <div class="product__form-wrapper">
-              <meta itemprop="price" content="{{ current_variant.price | divided_by: 100.00 }}">
-              <meta itemprop="priceCurrency" content="{{ cart.currency.iso_code }}">
-              <link itemprop="availability" href="http://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}">
-
-              {% include 'product-form' %}
-
-              {% if section.settings.show_share_buttons %}
-                {% if settings.share_facebook or settings.share_twitter or settings.share_pinterest %}
-                  <div class="product__share-wrapper small--hide">
-                    <div class="product__share">
-                        {% include 'social-sharing', type: "product", links: 'bottom' share_title: product.title, share_permalink: product.url, share_image: featured_media %}
-                    </div>
-                  </div>
-                {% endif %}
-              {% endif %}
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
+ 
 
   {% comment %}
   ------------------------------------------------------------------------------
