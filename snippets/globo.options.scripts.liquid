@@ -1,0 +1,71 @@
+<script>
+  var Globo = Globo || {}
+  Globo.Options = Globo.Options || {}
+  Globo.Options.url = "https://option.globosoftware.net"
+  Globo.Options.themeInfo = {"id":122440122540,"name":"Narrative","role":"main","theme_store_id":829,"theme_name":"Narrative","theme_version":"10.5.0"}
+  {% raw %}
+  Globo.Options.shop = {
+    id : 11332,
+    url : 'nycchichair.myshopify.com',
+    settings: {"price":{"seperator":"|","show_for_input":true,"show_for_option":true,"label_addon":"(+ {{addon}})","hide_additional_payment_button":true},"translation":{"selection_will_add":"Selection will add {{addon}} to the price","custom_product_name":"{{product_title}} - Selections"}},
+    pricing: {
+      features: {
+        fileUpload: 2,
+        removeCopyright: false
+      }
+    }
+  }
+  {% endraw %}
+  
+  Globo.Options.money_format = "{{ shop.money_format | replace: '"', "'" }}";
+  {% if product %}
+    Globo.Options.product = {{ product | json }}
+    Globo.Options.product.collections = {{ product.collections | map: 'id' | json }}
+  {% endif %}
+  {% if customer %}
+    Globo.Options.customer = {
+      id: '{{ customer.id }}',
+      name: '{{ customer.name }}',
+      email: '{{ customer.email }}'
+    }
+  {% endif %}
+  {% if cart %}
+    Globo.Options.cart = {{ cart | json }}
+  {% endif %}
+  Globo.Options.page = {
+    title: document.title,
+    href: window.location.href,
+    type: '{{request.page_type}}'
+  }
+  
+  Globo.Options.options = []
+</script>
+<script src="{{ 'globo.options.data.js' | asset_url }}"></script>
+<style>
+  [data-gpo-is-enabled="true"][data-gpo-cart-hide-additional-payment-button="true"] [data-shopify="dynamic-checkout-cart"],
+  [data-gpo-is-enabled="true"][data-gpo-product-hide-additional-payment-button="true"] [data-shopify="payment-button"],
+  button.gpo-original-shopify-button,
+  input.gpo-original-shopify-button,
+  input#addToCart.gpo-original-shopify-button,
+  a.gpo-original-shopify-button,
+  .gpo-original-shopify-button {
+    display: none !important;
+  }
+  .gpo-original-checkout-button {
+    display: none !important;
+  }
+  button.gpo-clone-checkout-button,
+  input.gpo-clone-checkout-button,
+  a.gpo-clone-checkout-button {
+    display: inline-block !important;
+    cursor: pointer !important;
+  }
+  .cart-flyout a.gpo-clone-checkout-button,
+  #mini-cart form.cart a.gpo-clone-checkout-button {
+    display: inline-block !important;
+  }
+</style>
+{% capture GPO_appScript %}{{ 'globo.options.index.js' | asset_url }}{% endcapture %}
+{% assign GPO_assetsPath = GPO_appScript | split: 'globo.options.index.js' | first %}
+<script>Globo.Options.__webpack_public_path__ = "{{ GPO_assetsPath }}globo.options."</script>
+<script src="{{GPO_appScript}}" async></script>

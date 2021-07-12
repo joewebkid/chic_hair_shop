@@ -1,0 +1,29 @@
+{{ "globo.swatch.css" | asset_url | stylesheet_tag }}{%- assign assets_url = "product-1.png" | asset_img_url: "50x" | split: "product-1_50x.png" -%}{%- assign files_url  = "product-1.png" | file_img_url: "50x" | split: "product-1_50x.png" -%}<script>
+  window.Globo      = window.Globo || {};
+  Globo.moneyFormat = "{{ shop.money_format | replace:'"',"'" }}";
+  Globo.GloboMoneyFormat = "{{ shop.money_format | replace:'"',"'" }}";
+  Globo.shopCurrency = "{{ shop.currency }}";
+  Globo.assetsUrl = "{{ assets_url[0] }}";
+  Globo.filesUrl = "{{ files_url[0] }}";
+  var GSCollection = GSCollection || {};
+    var GloboSwatchConfig = {
+        page: {{request.page_type | json}},
+        shop: {
+        name: "{{ shop.name | escape }}",
+        url: "{{ shop.url }}",
+        domain: "{{ shop.permanent_domain }}",
+        themeStoreId: "829",
+        themeName: "Narrative",
+        themeVersion: "10.5.0",
+        },
+        {% if product %}        product: {{ product | json}},
+        curVariant: {{ product.selected_or_first_available_variant | json }},
+        {% endif %}    }
+    {% if product %}
+  GloboSwatchConfig.curVariant.inventory_quantity = {{ product.selected_or_first_available_variant.inventory_quantity }}  {% for variant in product.variants %}
+  GloboSwatchConfig.product.variants[{{forloop.index0}}].inventory_quantity = {{ variant.inventory_quantity }}  {% endfor %}
+{% endif %}
+</script>
+{{ "globo.swatch.data.js" | asset_url | script_tag }}<script id="globoSwatchProductDetail" type="template/html">{% include 'globo.swatch.productdetail' %}</script>
+<script id="globoSwatchCollection"   type="template/html">{% include 'globo.swatch.collection' %}</script>
+{{ "globo.swatch.js" | asset_url | script_tag }}<script type="text/javascript">var globoswatch = new GloboSwatch(GloboSwatchConfig);</script>
