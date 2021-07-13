@@ -9,10 +9,10 @@
   <div class="product-form__item product-form__quantity-selector">
     <label class="attr__title product-form__quantity-label{% unless section.settings.show_variant_labels %} product-form__quantity-label--hidden{% endunless %}" for="Quantity-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
     <div class="product__quantity--block">
-      <div class="product__sign product__remove--quantity">-</div>
+      <div class="product__sign product__remove--quantity"><img src="{{ 'arrow_down.svg' | asset_url }}"/></div>
       <input class="product-form__quantity-input" type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1" pattern="[0-9]*">
-      <div class="product__quantity_inner"></div>
-      <div class="product__sign product__add--quantity">+</div>
+      <div class="product__quantity_inner">1</div>
+      <div class="product__sign product__add--quantity"><img src="{{ 'arrow_up.svg' | asset_url }}"/></div>
     </div>
   </div>
 {% endif %}
@@ -52,27 +52,40 @@
 
   <div class="flex__line--product">
     <div class="flex__line--select">
-      Site
+      <span class="attr__title">Site</span>
       <select name="FilterBy" id="FilterBy" class="collection-sort__input"><option value="">Slavic</option></select>
     </div>
     <div class="flex__line--select">
-      Category
+      <span class="attr__title">Category</span>
       <select name="FilterBy" id="FilterBy" class="collection-sort__input"><option value="">Natural</option></select>
     </div>
-    <div class="flex__line--select">
-      Style
+    <div class="flex__line--select">      
+      <span class="attr__title">Style</span>
       <select name="FilterBy" id="FilterBy" class="collection-sort__input"><option value="">Curly</option></select>
     </div>
-    <div class="flex__line--select">
-      Volume
+    <div class="flex__line--select">      
+      <span class="attr__title">Volume</span>
       <select name="FilterBy" id="FilterBy" class="collection-sort__input"><option value="">Thin</option></select>
     </div>
-    <div class="flex__line--select">
-      Length ″
-      <select name="FilterBy" id="FilterBy" class="collection-sort__input"><option value="">12″</option></select>
+    <div class="flex__line--select">      
+      <span class="attr__title">Length ″</span>
+      <select name="FilterBy" id="FilterBy" class="collection-sort__input">
+        <option value="">12″</option>
+        <option value="">13″</option>
+      </select>
     </div>
   </div>
   <script>
+    $('.product__remove--quantity').on("click",()=>{
+      let q = $('.product__quantity_inner').html()
+      if(parseInt(q)>1) q=parseInt(q)-1
+      $('.product__quantity_inner').html(q)
+    })
+    $('.product__add--quantity').on("click",()=>{
+      let q = $('.product__quantity_inner').html()
+      if(parseInt(q)<10) q=parseInt(q)+1
+      $('.product__quantity_inner').html(q)
+    })
     function fillHidden(hiddenname) {
     var checkboxes = document.querySelectorAll('[hidden-data="'+hiddenname+'"]');
     var hiddenfield = document.getElementById(hiddenname);
@@ -140,6 +153,9 @@
     </span>
     <span class="secondary-text" aria-hidden=true data-cart-secondary-submit-text>{{ 'products.product.view_cart' | t }}</span>
   </button> {% endcomment %}
+  <button class="btn btn__request_form">
+    LEAVE REQUEST FORM
+  </button>
   <p class="product__notification text-small text-center" data-cart-notification></p>
   {% if section.settings.enable_payment_button and current_variant.available %}
     {{ form | payment_button }}
