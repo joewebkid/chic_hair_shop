@@ -38,7 +38,7 @@
 	  <div><input type="checkbox" id="8.0" hidden-data="Color" onchange="fillHidden('Color')" value="8.0"><label for="8.0"><span>8.0</span></label></div>
 	  <div><input type="checkbox" id="8.1" hidden-data="Color" onchange="fillHidden('Color')" value="8.1"><label for="8.1"><span>8.1</span></label></div>
 	  <div><input type="checkbox" id="8.3" hidden-data="Color" onchange="fillHidden('Color')" value="8.3"><label for="8.3"><span>8.3</span></label></div>
-	  <div><input type="checkbox" id="834" hidden-data="Color" onchange="fillHidden('Color')" value="834"><label for="834"><span>834</span></label></div>
+	  <div><input type="checkbox" id="834" hidden-data="Color" onchange="fillHidden('Color')" value="834"><label for="834"><span>8.4</span></label></div>
 	  <div><input type="checkbox" id="9.0" hidden-data="Color" onchange="fillHidden('Color')" value="9.0"><label for="9.0"><span>9.0</span></label></div>
 	  <div><input type="checkbox" id="9.03" hidden-data="Color" onchange="fillHidden('Color')" value="9.03"><label for="9.03"><span>9.03</span></label></div>
 	  <div><input type="checkbox" id="9.13" hidden-data="Color" onchange="fillHidden('Color')" value="9.13"><label for="9.13"><span>9.13</span></label></div>
@@ -153,9 +153,9 @@
     </span>
     <span class="secondary-text" aria-hidden=true data-cart-secondary-submit-text>{{ 'products.product.view_cart' | t }}</span>
   </button> {% endcomment %}
-  <button class="btn btn__request_form">
+  <div class="btn btn__request_form" onclick="alert('request form')">
     LEAVE REQUEST FORM
-  </button>
+  </div>
   <p class="product__notification text-small text-center" data-cart-notification></p>
   {% if section.settings.enable_payment_button and current_variant.available %}
     {{ form | payment_button }}
