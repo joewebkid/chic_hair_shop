@@ -71,6 +71,7 @@
     {% endif %}
 
     <div class="site-footer__bottom{% unless section.settings.show_social_icons or section.settings.show_payment_icons %} site-footer__bottom--center{% endunless %}">
+      {% comment %} 
       {% if section.settings.show_social_icons %}
         <div class="site-footer__social-icons flex-footer__item--one-third">
           {% include 'social-links', disableTab: true, largeIcons: false %}
@@ -95,7 +96,8 @@
             </ul>
           {%- endunless -%}
         </div>
-      {%- endif -%}
+      {%- endif -%} 
+      {% endcomment %}
     </div>
   </div>
 

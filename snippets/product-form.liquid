@@ -5,6 +5,18 @@
 {% endunless %}
 
 
+{% if section.settings.show_quantity_selector %}
+  <div class="product-form__item product-form__quantity-selector">
+    <label class="attr__title product-form__quantity-label{% unless section.settings.show_variant_labels %} product-form__quantity-label--hidden{% endunless %}" for="Quantity-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
+    <div class="product__quantity--block">
+      <div class="product__sign product__remove--quantity">-</div>
+      <input class="product-form__quantity-input" type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1" pattern="[0-9]*">
+      <div class="product__quantity_inner"></div>
+      <div class="product__sign product__add--quantity">+</div>
+    </div>
+  </div>
+{% endif %}
+
 <p class="line-item-property__field">
   <label class="attr__title">Color</label>
   <div class="attributes__checkbox">
@@ -36,6 +48,29 @@
 	  <div><input type="checkbox" id="12.0" hidden-data="Color" onchange="fillHidden('Color')" value="12.0"><label for="12.0"><span>12.0</span></label></div>
 	  <div><input type="checkbox" id="Omre" hidden-data="Color" onchange="fillHidden('Color')" value="Omre"><label for="Omre"><span>Omre</span></label></div>
   	<input type="hidden" id="Color" name="properties[Color]">
+  </div>
+
+  <div class="flex__line--product">
+    <div class="flex__line--select">
+      Site
+      <select name="FilterBy" id="FilterBy" class="collection-sort__input"><option value="">Slavic</option></select>
+    </div>
+    <div class="flex__line--select">
+      Category
+      <select name="FilterBy" id="FilterBy" class="collection-sort__input"><option value="">Natural</option></select>
+    </div>
+    <div class="flex__line--select">
+      Style
+      <select name="FilterBy" id="FilterBy" class="collection-sort__input"><option value="">Curly</option></select>
+    </div>
+    <div class="flex__line--select">
+      Volume
+      <select name="FilterBy" id="FilterBy" class="collection-sort__input"><option value="">Thin</option></select>
+    </div>
+    <div class="flex__line--select">
+      Length ″
+      <select name="FilterBy" id="FilterBy" class="collection-sort__input"><option value="">12″</option></select>
+    </div>
   </div>
   <script>
     function fillHidden(hiddenname) {
@@ -93,13 +128,6 @@
       {% endif %}
     {% endfor %}
   </select>
-
-  {% if section.settings.show_quantity_selector %}
-    <div class="product-form__item product-form__quantity-selector">
-      <label class="attr__title product-form__quantity-label{% unless section.settings.show_variant_labels %} product-form__quantity-label--hidden{% endunless %}" for="Quantity-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
-      <input class="product-form__quantity-input" type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1" pattern="[0-9]*">
-    </div>
-  {% endif %}
 
   {% comment %} <button class="btn btn--to-secondary btn--full product__add-to-cart-button{% if section.settings.enable_payment_button and current_variant.available and product.selling_plan_groups == empty %} shopify-payment-btn btn--secondary{% endif %}"
     data-cart-submit
