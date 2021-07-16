@@ -17,7 +17,20 @@
   </div>
 {% endif %}
 
+{% comment %}
+------------------------------------------------------------------------------
+Product attributes
+{{product.id}}
+------------------------------------------------------------------------------
+{% endcomment %}
+
 {% include 'product-attributes' %}
+
+{% comment %}
+------------------------------------------------------------------------------
+Product form
+------------------------------------------------------------------------------
+{% endcomment %}
 
 {% form 'product', product, class:'product-form' %}
   {% unless product.has_only_default_variant %}
