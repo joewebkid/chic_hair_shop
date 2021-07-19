@@ -111,6 +111,13 @@
           }
         }
       }
+
+      $(".attributes__checkbox input").on("click",(e)=>{
+        {% comment %} console.log(serialize(document.forms[0])) {% endcomment %}
+        console.log($("form").serializeArray())
+        {% comment %} let valueColor = $(e.target).val()
+        console.log(valueColor) {% endcomment %}
+      })
     </script>
   </p>
   

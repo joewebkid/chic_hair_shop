@@ -24,7 +24,17 @@ Product attributes
 ------------------------------------------------------------------------------
 {% endcomment %}
 
-{% include 'product-attributes' %}
+{% comment %}
+   Продукция для шаблона:
+https://nycchichair.myshopify.com/admin/products/6777728336044
+https://nycchichair.myshopify.com/admin/products/6777712148652
+https://nycchichair.myshopify.com/admin/products/6777691275436
+https://nycchichair.myshopify.com/admin/products/6777691799724
+Вариации выборов:
+Quantity Done
+Color Done Изменить то
+{% endcomment %}
+
 
 {% comment %}
 ------------------------------------------------------------------------------
@@ -33,6 +43,11 @@ Product form
 {% endcomment %}
 
 {% form 'product', product, class:'product-form' %}
+
+  {% if product.id==6777728336044 or product.id==6777712148652 or product.id==6777691275436 or product.id==6777691799724 %}
+    {% include 'product-attributes' %}
+  {% endif %}
+
   {% unless product.has_only_default_variant %}
     {% for option in product.options_with_values %}
       <div class="product-form__item supports-js">
@@ -79,20 +94,41 @@ Product form
     </span>
     <span class="secondary-text" aria-hidden=true data-cart-secondary-submit-text>{{ 'products.product.view_cart' | t }}</span>
   </button> {% endcomment %}
-  <div class="btn btn__request_form" data-toggle="modal" data-target="#exampleModal">
-    LEAVE REQUEST FORM
-  </div>
-  <p class="product__notification text-small text-center" data-cart-notification></p>
-  {% if section.settings.enable_payment_button and current_variant.available %}
-    {{ form | payment_button }}
+  
+  {% if product.id==6777728336044 or product.id==6777712148652 or product.id==6777691275436 or product.id==6777691799724 %}
+    <div class="btn btn__request_form mb40" data-toggle="modal" data-target="#exampleModal">
+      LEAVE REQUEST FORM
+    </div>
+    {% else %}
+    
+    <button class="btn btn__request_form product__add-to-cart-button{% if section.settings.enable_payment_button and current_variant.available and product.selling_plan_groups == empty %} shopify-payment-btn btn--secondary{% endif %}"
+      data-cart-submit
+      type="submit" name="add"
+      {% unless current_variant.available %} disabled="true"{% endunless %}
+      aria-label="{{ button_text }}"
+    >
+      <span class="primary-text" aria-hidden="false" data-cart-primary-submit-text>
+        {{ button_text }}
+      </span>
+      <span class="secondary-text" aria-hidden=true data-cart-secondary-submit-text>{{ 'products.product.view_cart' | t }}</span>
+    </button>
+    <p class="product__notification text-small text-center" data-cart-notification></p>
+    {% if section.settings.enable_payment_button and current_variant.available %}
+      {{ form | payment_button }}
+    {% endif %}
   {% endif %}
+
+
 
   {{ form | payment_terms }}
 {% endform %}
 
 
+{% if product.id==6777728336044 or product.id==6777712148652 or product.id==6777691275436 or product.id==6777691799724 %}
 
 {% include 'contact-form' %}
+
+{% endif %}
 
 
 {% comment %}

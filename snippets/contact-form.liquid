@@ -6,12 +6,12 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">        
-        {% comment %} <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> {% endcomment %}
         <button type="button" class="closeModal" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
+        <h5 class="modal-title" id="exampleModalLabel">LEAVE REQUEST</h5>
         
         {% form 'contact' %}
             {% if form.posted_successfully? %}
@@ -41,7 +41,7 @@
 
             <input type="hidden" id="ContactFormAttributes" name="contact[Attributes]" value="">
 
-            <input type="submit" class="btn" value="{{ 'contact.form.send' | t }}">
+            <input type="submit" class="btn btn__request_form " value="{{ 'contact.form.send' | t }}">
         {% endform %}
 
 

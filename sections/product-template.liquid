@@ -35,7 +35,7 @@
   Product Featured Media
   ------------------------------------------------------------------------------
   {% endcomment %}
-  
+
   <div class="product__container page-width">
     <div class="">
       <div class="product-template__media page-width page-width--no-gutter">
@@ -60,7 +60,7 @@
 
               {% include 'product-preview-image' with media: variant_media, featured_media: featured, gallery_type: 'media', data_image: 'data-variant-media-image' %}
             {%- endif -%}
-
+          
           {% endfor %}
         {%- endunless -%}
 
@@ -103,18 +103,35 @@
 
           {% if total_media == 1 %}<div class="page-width">{% endif %}
 
-          <div class="product__submedia-list product__submedia-list--r{{ total_modulus }}{% if total_media == 1 %} product__submedia-list--single{% endif %}">
+          <div class="product__submedia-list product__submedia-list--r{{ total_modulus }}{% if total_media == 1 %} product__submedia-list--single{% endif %} grid-image">
 
             {% for media in product.media %}
+              {%- if media.media_type != 'video' and media.media_type != 'external_video' -%}
 
-              {% unless variant_media_ids contains media.id and section.settings.hide_variant_media %}
-                {% capture data_image %}
-                  data-parent-fit="cover"
-                {% endcapture %}
+                {% unless variant_media_ids contains media.id and section.settings.hide_variant_media %}
+                  {% capture data_image %}
+                    data-parent-fit="cover"
+                  {% endcapture %}
 
-                {% include 'product-preview-image' with media, featured_media: false, gallery_type: 'submedia', data_image: data_image %}
+                  {% include 'product-preview-image' with media, featured_media: false, gallery_type: 'submedia', data_image: data_image %}
 
-              {% endunless %}
+                {% endunless %}
+                
+              {% endif %}
+            {% endfor %}
+
+
+          </div>
+          
+          <div class="videoContainer">  
+            <h2 class="product__title h2 text-right" itemprop="name">CH_VIDEOS</h2>        
+            {% for media in product.media %}
+              {% case media.media_type %}
+                {% when 'external_video' %}
+                  <div class="product-video text-right">
+                    {{ media | video_tag }}
+                  </div>
+              {% endcase %}
             {% endfor %}
           </div>
 
@@ -191,28 +208,27 @@
               </ul>
             {%- endif -%}
 
-            <div class="product__description rte" itemprop="description" class="rte">
+            {% include 'product-tabs' %}
+
+            {% comment %} <div class="product__description rte" itemprop="description" class="rte">
               <div class="product__description--tabs_container">
                 <h6 class="tabs__title">Description</h6>
               </div>
               {%- assign product_description_content = product.description -%}
 
-              {%-if section.settings.enable_description_tabs -%}
-                {%- assign product_description_content = product_description_content | split: '<h6>' | first -%}
-              {%- endif -%}
+              
 
-              {% if product_description_content != '' %}
+              {%- assign product_description_split = product.description | split: '<p>[split]</p>' -%}
+              
+              {%- for item in product_description_split -%}
+                
                 <div id="product-description">
-                  {{ product.description }}
+                {{item}} >>
                 </div>
-              {% endif %}
+              {%- endfor -%}
 
-              {%-if section.settings.enable_description_tabs and product_description_content == '' -%}
-                <div id="product-description">
-                  {% include 'product-tabs' %}
-                </div>
-              {% endif  %}
-            </div>
+             
+            </div> {% endcomment %}
 
           </div>
         </div>

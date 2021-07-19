@@ -2236,6 +2236,9 @@ $loader-balls-background: rgba($color-button-text, 1);
     color: #626262;
   }
 }
+.mb40 {
+  margin-bottom: 40px;
+}
 
 .grid__product {
   display: flex;
@@ -2301,9 +2304,23 @@ $loader-balls-background: rgba($color-button-text, 1);
   top: -45px;
   right: 0;padding: 15px;
 }
+.modal-title {
+  font-weight: 600;
+}
+.modal-body {
+  padding: 25px;
+}
 .modal-body input, .modal-body textarea {
   border-bottom: 1px #dfdfdf solid;
+  font-size: 16px;
 }
+
+.gridAcademyLessons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+// .product__submedia-wrapper 
 
 /*================ Lists ================*/
 .list--inline {
@@ -4004,6 +4021,10 @@ $color-select-input: #fff;
 .custom__item-inner--html {
   display: block;
 }
+.custom__item-inner.custom__item-inner--html {
+  display: flex;
+  justify-content: center;
+}
 
 .custom__item-inner--product,
 .custom__item-inner--collection {
@@ -5650,19 +5671,27 @@ $image-bar-placeholder-border-color: rgba($color-body-text, 0.25);
 
 .product__description--tabs_container {
   border-bottom: 1px solid #111;
+  // display: flex;
+  // justify-content: space-between;
 }
 
 .product__description--tabs_container .tabs__title {
-  border: 1px solid #111;
-  border-bottom: 1px solid #fff;
+  border: 1px solid #fff;
+  border-bottom: 1px solid #111;
   position: relative;
   bottom: -1px;    
   margin: 0;
   display: inline-block;
   font-size: 20px;
   padding: 4px 10px;
-  font-weight: 600;
+  font-weight: 400;
   cursor:pointer;
+  margin-right: 40px;
+}
+.product__description--tabs_container .tabs__title.active {
+  border: 1px solid #111;
+  border-bottom: 1px solid #fff;
+  font-weight: 600;
 }
 
 #product-description {
@@ -5818,6 +5847,31 @@ input[type='number'].product-form__quantity-input {
   padding-left: 100px;
 }
 
+// MAYBE TEMP
+
+#shopify-section-1625462201bc101924 .image-bar__item {
+  background-size: contain;
+  position: relative;
+  overflow: hidden;
+  background-color: #eab0eb;
+}
+#shopify-section-1625462201bc101924 .image-bar__item .image-bar__content {
+  height: 85px;
+}
+
+.product-template__media {
+  overflow: hidden;
+}
+
+.grid-image {  
+  margin: 10px -5px;
+  width: auto!important;
+}
+.grid-image .product__submedia-list-item {
+  flex: 1 1 auto!important;
+  margin: 0 5px;
+
+}
 .product__share-wrapper {
   text-align: center;
   padding: $gutter 0;
@@ -5829,7 +5883,10 @@ input[type='number'].product-form__quantity-input {
   @include display-flexbox();
   @include flex-wrap(wrap);
   @include align-items(center);
-  margin-bottom: $gutter * 4;
+  margin-bottom: $gutter * 1;
+}
+.videoContainer {  
+  margin-bottom: $gutter * 3;
 }
 
 .product__submedia-list--single {
