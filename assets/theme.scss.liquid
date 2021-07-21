@@ -5688,9 +5688,13 @@ $image-bar-placeholder-border-color: rgba($color-body-text, 0.25);
 }
 
 .product__description--tabs_container {
-  border-bottom: 1px solid #111;
+  border-bottom: 1px solid #111;  
   // display: flex;
   // justify-content: space-between;
+  @include media-query($small) {
+   display: flex;
+    justify-content: space-between;  
+  }
 }
 
 .product__description--tabs_container .tabs__title {
@@ -5705,7 +5709,11 @@ $image-bar-placeholder-border-color: rgba($color-body-text, 0.25);
   font-weight: 400;
   cursor:pointer;
   margin-right: 40px;
+  @include media-query($small) {
+    margin-right: 0px;    
+  }
 }
+
 .product__description--tabs_container .tabs__title.active {
   border: 1px solid #111;
   border-bottom: 1px solid #fff;
