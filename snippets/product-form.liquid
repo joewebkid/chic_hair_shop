@@ -17,6 +17,24 @@
   </div>
 {% endif %}
 
+<script>
+$(".product__add--quantity").on("click",()=>{
+  let quantity = parseInt($(".product-form__quantity-input").val())
+  if(quantity<10) {
+    $(".product__quantity_inner").html(quantity+1)
+    $(".product-form__quantity-input").val(quantity+1)
+  }
+})
+$(".product__remove--quantity").on("click",()=>{
+  let quantity = parseInt($(".product-form__quantity-input").val())
+  if(quantity>1) {
+    $(".product__quantity_inner").html(quantity-1)
+    $(".product-form__quantity-input").val(quantity-1)
+  }
+  
+})
+</script>
+
 {% comment %}
 ------------------------------------------------------------------------------
 Product attributes
@@ -35,7 +53,20 @@ Quantity Done
 Color Done Изменить то
 {% endcomment %}
 
+{% if product.id==6777728336044 or product.id==6777712148652 or product.id==6777691275436 or product.id==6777691799724 %}
 
+  <p class="form-success formSuccessBlock">
+    {{ 'contact.form.post_success' | t }}
+  </p>
+  <script>
+  if(window.location.search=="?contact_posted=true")
+    setTimeout(()=> $(".formSuccessBlock").fadeToggle(), 1000)
+  </script>
+    
+  {% include 'product-attributes' %}
+  {% include 'contact-form' %}  
+
+{% endif %}
 {% comment %}
 ------------------------------------------------------------------------------
 Product form
@@ -43,10 +74,6 @@ Product form
 {% endcomment %}
 
 {% form 'product', product, class:'product-form' %}
-
-  {% if product.id==6777728336044 or product.id==6777712148652 or product.id==6777691275436 or product.id==6777691799724 %}
-    {% include 'product-attributes' %}
-  {% endif %}
 
   {% unless product.has_only_default_variant %}
     {% for option in product.options_with_values %}
@@ -124,11 +151,6 @@ Product form
 {% endform %}
 
 
-{% if product.id==6777728336044 or product.id==6777712148652 or product.id==6777691275436 or product.id==6777691799724 %}
-
-{% include 'contact-form' %}
-
-{% endif %}
 
 
 {% comment %}

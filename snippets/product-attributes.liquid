@@ -29,13 +29,12 @@
         <div><input type="checkbox" id="10.3" hidden-data="Color" onchange="fillHidden('Color')" value="10.3"><label for="10.3"><span>10.3</span></label></div>
         <div><input type="checkbox" id="12.0" hidden-data="Color" onchange="fillHidden('Color')" value="12.0"><label for="12.0"><span>12.0</span></label></div>
         <div><input type="checkbox" id="Omre" hidden-data="Color" onchange="fillHidden('Color')" value="Omre"><label for="Omre"><span>Omre</span></label></div>
-        <input type="hidden" id="Color" name="properties[Color]">
     </div>
   
-    <div class="flex__line--product">
+    <div class="flex__line--product changeContactAttr">
       <div class="flex__line--select">
         <span class="attr__title">Site</span>
-        <select name="" id="" class="collection-sort__input">
+        <select name="contact[Site]" data-id="ContactFormSite" id="Site" class="collection-sort__input">
             <option value="">Slavic</option>
             <option value="">South Russian</option>
             <option value="">Virgin  Slavic</option>
@@ -43,7 +42,7 @@
       </div>
       <div class="flex__line--select">
         <span class="attr__title">Category</span>
-        <select name="" id="" class="collection-sort__input">
+        <select name="contact[Category]" data-id="ContactFormCategory" id="Category" class="collection-sort__input">
             <option value="">Natural</option>
             <option value="">Ombre</option>
             <option value="">Blonde</option>
@@ -51,7 +50,7 @@
       </div>
       <div class="flex__line--select">      
         <span class="attr__title">Style</span>
-        <select name="" id="" class="collection-sort__input">
+        <select name="contact[Style]" data-id="ContactFormStyle" id="Style" class="collection-sort__input">
             <option value="">Curly</option>
             <option value="">Straight</option>
             <option value="">Wavy</option>
@@ -59,7 +58,7 @@
       </div>
       <div class="flex__line--select">      
         <span class="attr__title">Volume</span>
-        <select name="" id="" class="collection-sort__input">
+        <select name="contact[Volume]" data-id="ContactFormVolume" id="Volume" class="collection-sort__input">
             <option value="">Thin</option>
             <option value="">Medium</option>
             <option value="">Thick</option>
@@ -67,7 +66,7 @@
       </div>
       <div class="flex__line--select">      
         <span class="attr__title">Length ″</span>
-        <select name="FilterBy" id="FilterBy" class="collection-sort__input">
+        <select name="contact[Length]" data-id="ContactFormLength" id="Length" class="collection-sort__input">
           <option value="">12″</option>
           <option value="">14″</option>
           <option value="">16″</option>
@@ -111,6 +110,12 @@
           }
         }
       }
+
+      $(".changeContactAttr select").on("change",(e)=>{
+        let value = $(e.target).find("option:selected").text()
+        let id = $(e.target).data("id")
+        $("#"+id).val(value)
+      })
 
       $(".attributes__checkbox input").on("click",(e)=>{
         {% comment %} console.log(serialize(document.forms[0])) {% endcomment %}
