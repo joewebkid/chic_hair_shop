@@ -39,7 +39,12 @@
             <label for="ContactFormMessage" class="label--hidden">{{ 'contact.form.message' | t }}</label>
             <textarea rows="6" id="ContactFormMessage" name="contact[{{ 'contact.form.message' | t }}]" placeholder="{{ 'contact.form.message' | t }}">{% if form.body %}{{ form.body }}{% endif %}</textarea>
 
-            <input type="hidden" id="ContactFormAttributes" name="contact[Attributes]" value="">
+            <input type="hidden" id="Color" name="contact[Color]">
+            <input type="hidden" id="ContactFormSite" name="contact[Site]" value="Slavic">
+            <input type="hidden" id="ContactFormCategory" name="contact[Category]" value="Natural">
+            <input type="hidden" id="ContactFormStyle" name="contact[Style]" value="Curly">
+            <input type="hidden" id="ContactFormVolume" name="contact[Volume]" value="Thin">
+            <input type="hidden" id="ContactFormLength" name="contact[Length]" value="12″">
 
             <input type="submit" class="btn btn__request_form " value="{{ 'contact.form.send' | t }}">
         {% endform %}
