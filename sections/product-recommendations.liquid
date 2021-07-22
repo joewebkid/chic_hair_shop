@@ -4,20 +4,25 @@
       <div class="product-recommendations">
         <div class="product-recommendations__heading grid text-center">
           <div class="grid__item medium-up--ten-twelfths medium-up--push-one-twelfth product__recomendation page-width">
-            <h2>{{ section.settings.heading | escape }}</h2>
+            {% comment %} <h2>{{ section.settings.heading | escape }}</h2> {% endcomment %}
+            <h2>Related Products</h2>
           </div>
         </div>
         <ul class="product-recommendations__slider" data-recommendations-slider>
           {%- for product in recommendations.products -%}
+            {%- if forloop.index < 4 -%}
             <li class="product-recommendations__slide" data-recommendations-slide data-product-recommendation-index="{{ forloop.index }}">
               {% include 'product-card', product: product %}
             </li>
+            {%- endif -%}
           {%- endfor -%}
         </ul>
         {%- if recommendations.products_count > 1 -%}
           <div class="product-recommendations__indicators-wrapper" aria-hidden="true" data-recommendations-indicators>
             {%- for product in recommendations.products -%}
+              {%- if forloop.index < 4 -%}
               <span class="product-recommendations__slide-indicator" data-recommendations-indicator data-product-recommendation-indicator-index="{{ forloop.index }}"></span>
+              {%- endif -%}
             {%- endfor -%}
           </div>
         {%- endif -%}
