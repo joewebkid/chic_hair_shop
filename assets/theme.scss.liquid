@@ -708,6 +708,7 @@ textarea {
 .product__container {
   display:grid;
   grid-template-columns: 1fr 1fr;
+
   @include media-query($small) {
     grid-template-columns: 1fr;
   }
@@ -2260,6 +2261,13 @@ $loader-balls-background: rgba($color-button-text, 1);
 .grid__product {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  @include media-query($small) {
+    iframe {
+      width: 100%!important;
+      margin-bottom: 25px;
+    }
+  }
 }
 .header__block__academy {
   border-bottom: 2px solid #111;
@@ -2336,6 +2344,11 @@ $loader-balls-background: rgba($color-button-text, 1);
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+
+.gridAcademyLessons img {
+  cursor: pointer;
+}
+
 
 // .product__submedia-wrapper 
 
@@ -5775,6 +5788,7 @@ $image-bar-placeholder-border-color: rgba($color-body-text, 0.25);
 }
 .flex__line--select {
   margin-right: 20px;
+  min-width: 190px;
 }
 
 .product__form-container {
@@ -5879,7 +5893,8 @@ input[type='number'].product-form__quantity-input {
   background-size: contain;
   position: relative;
   overflow: hidden;
-  background-color: #eab0eb;
+  {% comment %} background-color: #eab0eb; {% endcomment %}  
+  background-color: #000;
 }
 #shopify-section-1625462201bc101924 .image-bar__item .image-bar__content {
   height: 85px;
@@ -5916,16 +5931,19 @@ input[type='number'].product-form__quantity-input {
 }
 .videoContainer iframe {  
   width: 100%;
-  height: 250px;
+  height: 325px;
+  @include media-query($small) {
+    height: 285px;
+  }
 }
 
-[data-section-id="162088668674222f18"] .custom-content {
+{% comment %} [data-section-id="162088668674222f18"] .custom-content {
   @media (max-width: 750px) {
     & .custom__item--3ae7ea84-9812-4c2f-9be7-02de13170cae {
       order: 2;
     }
   }
-}
+} {% endcomment %}
 
 .product__submedia-list--single {
   display: block;
