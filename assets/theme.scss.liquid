@@ -302,6 +302,11 @@
   }
 }
 
+.rtbsn-wrap .rtbsn-close {
+  width: 40px;
+  height: 40px;
+}
+
 .breadcrumbs {
   margin-top: 70px;
 }
@@ -309,7 +314,17 @@
 .breadcrumbs ol {
   display: flex;
   padding: 0;
+  @include media-query($small) {
+    flex-direction: column-reverse;
+  }
 }
+
+.breadcrumbs__divider {  
+  @include media-query($small) {
+    display: none;
+  }
+}
+
 .breadcrumbs ol div {
   margin: 0 2px;
   
