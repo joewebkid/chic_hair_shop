@@ -4576,6 +4576,8 @@ $image-bar-placeholder-border-color: rgba($color-body-text, 0.25);
   }
 }
 
+#1626804498521a4e75 
+
 .image-bar__link {
   display: block;
 }
@@ -8908,6 +8910,12 @@ shopify-payment-terms {
 
 .collection-list-grid__image-item {
   margin-bottom: $grid-gutter * 2;
+  
+  @include media-query($small) {
+    & .collection-grid-item__title .text-title.h2 {
+      font-size: 1rem;
+    }
+  }
 }
 
 .collection-list-grid__image-container {
