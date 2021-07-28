@@ -1,0 +1,58 @@
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/swiper/swiper-bundle.min.css"
+/>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+  $(document).ready(function(){    
+    var swiper = new Swiper(".mySwiper", {
+      spaceBetween: 15,
+      slidesPerView: 3,
+      freeMode: true,
+      watchSlidesVisibility: true,
+      watchSlidesProgress: true,
+    });
+    var swiper2 = new Swiper(".mySwiper2", {
+      spaceBetween: 10,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      thumbs: {
+        swiper: swiper,
+      },
+    });
+
+    $('.product__media-wrapper.swiper-slide').each((i, e)=>{
+      
+      $( e ).zoom({url: $( e ).find("img").data("zoom")})
+    })
+  })
+</script>
+<style>
+</style>
+
+<div
+  style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+  class="swiper-container mySwiper2"
+>
+  <div class="swiper-wrapper">
+  {% for image in product.images %}
+    <div class="swiper-slide product__media-wrapper">
+      <img class="mySlides" src="{{ image |  img_url: '700x' }}" data-zoom="{{ image | img_url: '1000x'}}" style="width:100%">
+      {% comment %} img_url: 'master' {% endcomment %}
+    </div>
+  {% endfor %}
+  </div>   
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div> 
+</div>
+<div thumbsSlider="" class="swiper-container mySwiper">
+    <div class="swiper-wrapper product__submedia-wrapper" style="padding-top: 0;margin-top: 15px;">
+    {% for image in product.images %}
+      <div class="swiper-slide">
+        <img class="mySlides product__submedia-preview-image lazyload" src="{{ image | img_url: '300x'}}" style="position: relative;">
+      </div>
+    {% endfor %}
+  </div>
+</div>

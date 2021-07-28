@@ -4,6 +4,7 @@
   {%- assign current_variant_sale = true -%}
 {% endif %}
 {% assign featured_media = current_variant.featured_media | default: product.featured_media %}
+
 <div class="collection-template" data-section-id="{{ section.id }}" data-section-type="collection-template">
   {% assign t = template | split: '.' | first  %}
   <div class="page-width">
@@ -38,7 +39,7 @@
   <div class="product__container page-width">
     <div class="">
       <div class="product-template__media page-width page-width--no-gutter">
-        {% assign variant_media_ids = '' %}
+        {% comment %} {% assign variant_media_ids = '' %}
 
         {%- unless product.has_only_default_variant -%}
 
@@ -61,11 +62,13 @@
             {%- endif -%}
           
           {% endfor %}
+
+          
         {%- endunless -%}
 
         {% unless featured_media and variant_media_ids contains featured_media.id %}
           {% include 'product-preview-image' with media: featured_media, featured_media: true, gallery_type: 'media', data_image: 'data-variant-media-image' %}
-        {%- endunless -%}
+        {%- endunless -%} {% endcomment %}
 
         {% include 'shopify-xr-button' %}
         
@@ -104,7 +107,8 @@
 
           <div class="product__submedia-list product__submedia-list--r{{ total_modulus }}{% if total_media == 1 %} product__submedia-list--single{% endif %} grid-image">
 
-            {% for media in product.media %}
+            {% include 'product-image-slider' %}
+            {% comment %} {% for media in product.media %}
               {%- if media.media_type != 'video' and media.media_type != 'external_video' -%}
 
                 {% unless variant_media_ids contains media.id and section.settings.hide_variant_media %}
@@ -117,7 +121,7 @@
                 {% endunless %}
                 
               {% endif %}
-            {% endfor %}
+            {% endfor %} {% endcomment %}
 
           </div>
           
@@ -338,6 +342,34 @@ VIDEO
     {{ product.media | where: 'media_type', 'model' | json }}
   </script>
 </div>
+
+<script src="{{ 'zoom__jquery.js' | asset_url }}" defer="defer"></script>
+<script>  
+
+  $(document).ready(function(){    
+    {% comment %} $('.product__media-wrapper').zoom({url: $(".product__media-wrapper img").attr("srcset")})
+
+
+    $(".product__submedia-wrapper").on("click",(e)=>{
+      let href__image = $(e.target).data("srcset")
+
+      $(".product__media-wrapper img").fadeOut(function() { 
+        $(".product__media-wrapper").addClass("loading")
+        $(".product__media-wrapper img").on('load',function() { 
+          
+          $(".product__media-wrapper").removeClass("loading");        
+          $(".product__media-wrapper img").fadeIn(200);     
+        }); 
+        $(".product__media-wrapper img").attr("src", href__image); 
+        $(".product__media-wrapper img").attr("srcset", href__image); 
+      }); 
+
+     
+
+    }) {% endcomment %}
+  });
+
+</script>
 
 {% schema %}
 {

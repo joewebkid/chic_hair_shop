@@ -58,12 +58,12 @@
   <div>
 {%- endif -%}
 
-  <a href="{{ media | img_url: 'master' }}"
+  <div data-href="{{ media | img_url: 'master' }}"
      class="product__{{ gallery_type }}-wrapper"
      {% if gallery_type == 'media' and media %}style="padding-top:{{ 1 | divided_by: media.preview_image.aspect_ratio | times: 100}}%"{% endif %}
      data-product-slideshow-open
      data-media-id="{{ section.id }}-{{ media.id }}">
-
+     
     {%- capture thumbnail_alt -%}
       {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
         {{ 'sections.product_template.video_thumbnail_alt' | t: image_alt: media.alt | escape }}
@@ -104,5 +104,5 @@
         <img src="{{ media | img_url: 'master' }}" alt="{{ media.alt | escape }}" class="product__submedia">
       </noscript>
     {%- endif -%}
-  </a>
+  </div>
 </div>
